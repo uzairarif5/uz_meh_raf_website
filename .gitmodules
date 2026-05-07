@@ -4,3 +4,9 @@
 [submodule "app/_content"]
 	path = app/_content
 	url = https://github.com/uzairarif5/uz_meh_raf_website_content.git
+[submodule "_UzairContent"]
+	path = _UzairContent
+	url = https://github.com/uzairarif5/uz_mef_raf_Uzair_Content.git
+[submodule "app/_UzairContent"]
+	path = app/_UzairContent
+	url = https://github.com/uzairarif5/uz_mef_raf_Uzair_Content.git
