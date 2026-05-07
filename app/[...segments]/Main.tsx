@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
 
 const FETCH_ERROR = "ERROR";
 
@@ -16,7 +18,14 @@ export default function Main(params: {repoName: string, segments: string[]}) {
       if (res.ok) return res.text();
       return FETCH_ERROR;
     })
-    .then(changeContent);
+    .then(async (res) => {
+      const rawHtml = await marked.parse(res,{async: true});
+      const safeHtml = DOMPurify.sanitize(rawHtml, {
+        ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'h1', 'h2', 'h3', 'ul', 'ol', 'li','img'],
+        ALLOWED_ATTR: ['width','height','src','href','title','alt'],
+      });
+      changeContent(safeHtml);
+    });
   };
 
   useEffect(()=>{
@@ -48,7 +57,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         })
       }
     </nav>
-    <main><pre>{content}</pre></main>
+    <main dangerouslySetInnerHTML={{__html:content}}></main>
     <footer>
       <Link href={"./"} id="BackButton">Back</Link>
       <Link href={"/"} id="homeButton">home page</Link>
