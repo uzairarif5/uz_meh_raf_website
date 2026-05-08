@@ -9,7 +9,7 @@ async function getLast5Commits(repoName: string) {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`,
       }
-  }).then(res => res.json()) || [];
+  }).then(res => res.json()) || null;
 }
 
 async function getCommitsDetails(repoName: string, sha: string) {
@@ -29,6 +29,7 @@ async function recentEditsTable() {
   for (let author of authors){
     let updatesToAdd: [string,string, string][] = [];
     let last5Commits = await getLast5Commits(githubRepoName[author]);
+    if (!last5Commits) continue;
     for (let commit of last5Commits) {
       let commitDetails = await getCommitsDetails(githubRepoName[author], commit["sha"]);
       if (!commitDetails) continue;
