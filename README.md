@@ -8,6 +8,9 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.2.1:
+- Added default value for fetch in home page (in case of fail).
+
 update 0.2.0:
 - Added update table which shows last 5 commits.
 
