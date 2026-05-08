@@ -1,12 +1,6 @@
-import Link from "next/link";
-import Main from "./Main";
 import "./main.css";
-
-const githubRepoName: {[key: string]: string} = {
-  "Uzair":"uz_meh_raf_Uzair_Content",
-  "Rafay":"uz_meh_raf_Raf_Content",
-  "Mehrab":"uz_meh_raf_Meh_Content"
-}
+import githubRepoName from "../infoStore/githubReponames";
+import Main from "./Main";
 
 export default async function Page({params}: { params: Promise<{ segments: string[] }>}) {
   const authors = Object.keys(githubRepoName);

@@ -1,15 +1,39 @@
-@import "tailwindcss";
-
 body {
   background-color: white;
   color: black;
+
+  h1, h2{
+    text-align: center;
+  }
 
   hr{
     margin: 10px 0px;
   }
 
-  table, th, td {
-    border: solid 2px black;
-    border-collapse: collapse;
+  #changesContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding-bottom: 10px;
+
+    table{
+      border-collapse: collapse;
+
+      tbody {
+        border: solid 2px black;
+
+        td {
+          border-left: solid 1px #aaa;
+          border-bottom: solid 1px #aaa;
+          padding: 3px;
+          word-break: keep-all;
+          white-space: nowrap;
+        }
+      }
+    }
+
   }
 }
