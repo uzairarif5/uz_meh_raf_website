@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import githubRepoName from "./infoStore/githubReponames";
 import Link from "next/link";
+import { put, get } from "@vercel/blob";
+
+type AuthorChangesType = {[key: string]: [string, string, string][]};
+const blobTTL = 100000 //ms
 
 async function getLast5Commits(repoName: string) {
   return await fetch(`https://api.github.com/repos/uzairarif5/${repoName}/commits?per_page=5&page=1`, {
@@ -22,9 +26,16 @@ async function getCommitsDetails(repoName: string, sha: string) {
   }).then(res => res.json()) || null;
 }
 
-async function recentEditsTable() {
+async function getAuthorChanges() {
+  const blobGetRes = await get("authorChanges.txt", {access: "public"});
+  if (blobGetRes) {
+    const response = new Response(blobGetRes.stream);
+    const resAsJSON = await response.json();
+    if (Date.now() < resAsJSON.date + blobTTL) return resAsJSON.data;
+  }
+
   let authors = Object.keys(githubRepoName);
-  let authorChanges: {[key: string]: [string, string, string][]} = {};
+  let authorChanges: AuthorChangesType = {};
 
   for (let author of authors){
     let updatesToAdd: [string,string, string][] = [];
@@ -46,6 +57,16 @@ async function recentEditsTable() {
     } 
     authorChanges[author] = updatesToAdd;
   }
+
+  const objToStore = {data: authorChanges, date: Date.now()}
+  await put("authorChanges.txt", JSON.stringify(objToStore), {access: "public", addRandomSuffix: false, allowOverwrite: true});
+  
+  return authorChanges;
+}
+
+async function recentEditsTable() {
+  const authorChanges: AuthorChangesType = await getAuthorChanges();
+  const authors = Object.keys(authorChanges);
 
   return <section id="changesContainer">
     {authors.map((a, i)=>{
