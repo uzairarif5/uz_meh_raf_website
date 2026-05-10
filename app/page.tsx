@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import githubRepoName from "./infoStore/githubReponames";
 import Link from "next/link";
-import { put, get } from "@vercel/blob";
+import { createClient } from '@supabase/supabase-js'
 
 type AuthorChangesType = {[key: string]: [string, string, string][]};
-const blobTTL = 100000 //ms
+const recentCommitsTTL = 86400000 //ms
 
 async function getLast5Commits(repoName: string) {
   return await fetch(`https://api.github.com/repos/uzairarif5/${repoName}/commits?per_page=5&page=1`, {
@@ -27,12 +27,9 @@ async function getCommitsDetails(repoName: string, sha: string) {
 }
 
 async function getAuthorChanges() {
-  const blobGetRes = await get("authorChanges.txt", {access: "public"});
-  if (blobGetRes) {
-    const response = new Response(blobGetRes.stream);
-    const resAsJSON = await response.json();
-    if (Date.now() < resAsJSON.date + blobTTL) return resAsJSON.data;
-  }
+  const commitsFetchRes = await fetch("https://hnvoklrpquwiekwyjvmu.supabase.co/storage/v1/object/public/uz-meh-raf-storage_bucket/commits.json");
+  const commitsFetchResJSON = await commitsFetchRes.json();
+  if (Date.now() < (commitsFetchResJSON.date + recentCommitsTTL)) return commitsFetchResJSON.data;
 
   let authors = Object.keys(githubRepoName);
   let authorChanges: AuthorChangesType = {};
@@ -58,8 +55,11 @@ async function getAuthorChanges() {
     authorChanges[author] = updatesToAdd;
   }
 
-  const objToStore = {data: authorChanges, date: Date.now()}
-  await put("authorChanges.txt", JSON.stringify(objToStore), {access: "public", addRandomSuffix: false, allowOverwrite: true});
+  const supabase = createClient('https://hnvoklrpquwiekwyjvmu.supabase.co', process.env.SUPABASE_KEY!);
+  await supabase.storage.from('uz-meh-raf-storage_bucket').upload('/commits.json', JSON.stringify({
+    date : Date.now(),
+    data: authorChanges
+  }), {upsert: true});
   
   return authorChanges;
 }
