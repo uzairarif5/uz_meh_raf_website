@@ -5,18 +5,19 @@ import { useEffect, useRef, useState } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 
-const FETCH_ERROR = "ERROR";
+const DISPLAY_ERROR = "<p>There was an error!</p>";
 
 export default function Main(params: {repoName: string, segments: string[]}) {
-  const [navLinks, changeNL] = useState([""]);
+  const [navLinks, changeNL] = useState<string[]>([]);
   const [content, changeContent] = useState("");
   const navHeight = useRef("0px");
 
   function getMD(fileName: string){
-    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}/${params.segments.slice(1).join("/")+"/"+fileName}.md`)
+    const filePath = params.segments.slice(1).join("/") + "/" + fileName + ".md";
+    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`)
     .then(res => {
       if (res.ok) return res.text();
-      return FETCH_ERROR;
+      return DISPLAY_ERROR;
     })
     .then(async (res) => {
       const rawHtml = await marked.parse(res,{async: true});
@@ -25,19 +26,30 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         ALLOWED_ATTR: ['width','height','src','href','title','alt'],
       });
       changeContent(safeHtml);
+    })
+    .catch(err => {
+      fetch(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`);
+      console.error(err);
+      console.log("jsdelivr purged!");
     });
   };
 
   useEffect(()=>{
-    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}/${params.segments.slice(1).join("/")}/order.txt`)
+    const path = params.segments.slice(1).join("/");
+    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`)
     .then(res => {
       navHeight.current = "140px";
       if (res.ok) return res.text();
-      return FETCH_ERROR;
+      return DISPLAY_ERROR;
     })
     .then(res => { 
-      if (res === FETCH_ERROR) changeNL([""]);
+      if (res === DISPLAY_ERROR) changeNL([]);
       else changeNL(res.split("\n")); 
+    })
+    .catch(err => {
+      fetch(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
+      console.error(err);
+      console.log("jsdelivr purged!");
     });
   }, []);
 
@@ -57,7 +69,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         })
       }
     </nav>
-    <main dangerouslySetInnerHTML={{__html:content}}></main>
+    <main dangerouslySetInnerHTML={{__html: navLinks.length ? content : DISPLAY_ERROR}}></main>
     <footer>
       <Link href={"./"} id="BackButton">Back</Link>
       <Link href={"/"} id="homeButton">home page</Link>

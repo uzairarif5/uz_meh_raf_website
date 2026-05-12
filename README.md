@@ -8,6 +8,13 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.5.0:
+- Website now uses Roboto font.
+- Error message is display to user when fetch error occurs.
+- File on jsDelivr is purged when there is a fetch error.
+- `navLinks` is now [] instead of [""].
+- reactStrictMode is now used.
+
 update 0.4.0:
 - Using Supabase storage instead of Vercel Blob for storing recent commits.
 
