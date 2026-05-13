@@ -8,6 +8,9 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.5.1:
+- Improved error handling.
+
 update 0.5.0:
 - Website now uses Roboto font.
 - Error message is display to user when fetch error occurs.
