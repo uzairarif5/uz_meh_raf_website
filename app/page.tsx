@@ -43,13 +43,16 @@ async function getAuthorChanges() {
       if (!commitDetails) continue;
       let date: string = commitDetails["commit"]["committer"]["date"];
       for (let file of commitDetails.files) {
-        let charToRemove = 0;
-        if (file["filename"].endsWith(".md")) charToRemove = 3;
-        else if (file["filename"].endsWith("/order.txt")) charToRemove = 10;
-        let filename: string = file["filename"]
-          .substring(0, file["filename"].length - charToRemove)
-          .replaceAll("/", " > ");
-        updatesToAdd.push([filename, file["status"], date]);
+        if (file["filename"].endsWith(".md")) {
+          let shortenedFileName = file["filename"].substring(0, file["filename"].length - 3);
+          let formattedFileName = shortenedFileName.replaceAll("/", " > ");
+          updatesToAdd.push([formattedFileName, file["status"], date]);
+        }
+        else if (file["filename"].endsWith("/order.txt")) {
+          let shortenedFileName = file["filename"].substring(0, file["filename"].length - 10);
+          let formattedFileName = shortenedFileName.replaceAll("/", " > ");
+          updatesToAdd.push([formattedFileName, "ordering", date]);
+        }
       }
     } 
     authorChanges[author] = updatesToAdd;

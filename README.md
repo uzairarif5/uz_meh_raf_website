@@ -8,6 +8,9 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.6.0:
+- In the update table, if `order.txt` changes, the table says "ordering" instead of "modified".
+
 update 0.5.1:
 - Improved error handling.
 
