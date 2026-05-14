@@ -16,8 +16,8 @@ const PREFILLED_CONTENT = {
 const ERROR_TEXT = "ERROR_TEXT";
 
 export default function Main(params: {repoName: string, segments: string[]}) {
-  const [navLinks, changeNL] = useState<string[]>(EMPTY_NAVLINKS);
-  const [content, changeContent] = useState("");
+  const navLinks = useRef<string[]>(EMPTY_NAVLINKS);
+  const [content, changeContent] = useState(PREFILLED_CONTENT.waitingForLinks);
   const navHeight = useRef("0px");
 
   function getMD(fileName: string){
@@ -56,7 +56,10 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     })
     .then(res => { 
       if (res === ERROR_TEXT) changeContent(PREFILLED_CONTENT.error);
-      else changeNL(res.split("\n")); 
+      else {
+        navLinks.current = res.split("\n");
+        changeContent("");
+      }
     })
     .catch(err => {
       fetch(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
@@ -69,7 +72,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     <header><p>{params.segments[0]}'s blogs</p></header>
     <nav id="buttonsContainer" style={{height: navHeight.current}}>
       {
-        navLinks.map((link, i)=>{
+        navLinks.current.map((link, i)=>{
           if (link.length == 0) return;
           if (link.startsWith("/")) 
             return <div key={i} className="navButton">
@@ -81,7 +84,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         })
       }
     </nav>
-    <main dangerouslySetInnerHTML={{__html: navLinks == EMPTY_NAVLINKS ? PREFILLED_CONTENT.waitingForLinks : content}}></main>
+    <main dangerouslySetInnerHTML={{__html: content}}></main>
     <footer>
       <Link href={"./"} id="BackButton">Back</Link>
       <Link href={"/"} id="homeButton">home page</Link>
