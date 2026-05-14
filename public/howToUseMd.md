@@ -1,4 +1,4 @@
-Since between preview and code to see the difference
+Switch between preview and code to see the difference.
 
 # This is Heading (also called H1)
 
