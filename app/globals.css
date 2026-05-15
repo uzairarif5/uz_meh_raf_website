@@ -18,22 +18,43 @@ body {
     flex-wrap: nowrap;
     gap: 20px;
     padding-bottom: 10px;
+    align-items: flex-start;
 
-    table{
-      border-collapse: collapse;
-
-      tbody {
-        border: solid 2px black;
-
-        td {
-          border-left: solid 1px #aaa;
-          border-bottom: solid 1px #aaa;
-          padding: 3px;
-          word-break: keep-all;
-          white-space: nowrap;
-        }
-      }
+    h3 {
+      text-align: center;
     }
 
+    .updateLogOneDate {
+      border: solid 2px black;
+      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: 1fr 80px;
+      justify-content: space-between;
+      font-size: 16px;
+
+      .dateHolder {
+        grid-column: span 2;
+        font-size: 12px;
+      }
+
+      .changedRootOrdering {
+        grid-column: span 2;
+        border-top: solid 1px #aaa;
+      }
+
+      .fNameContainer {
+        border-top: solid 1px #aaa;
+      }
+
+      .statusContainer {
+        text-align: end;
+        border-left: solid 1px #aaa;
+        border-top: solid 1px #aaa;
+      }
+
+      span{
+        padding: 1px 4px;
+      }
+    }
   }
 }

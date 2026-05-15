@@ -50,13 +50,13 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     const path = params.segments.slice(1).join("/");
     fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`)
     .then(res => {
-      navHeight.current = "140px";
       if (res.ok) return res.text();
       return ERROR_TEXT;
     })
     .then(res => { 
       if (res === ERROR_TEXT) changeContent(PREFILLED_CONTENT.error);
       else {
+        navHeight.current = "140px";
         navLinks.current = res.split("\n");
         changeContent("");
       }

@@ -1,9 +1,11 @@
-import { Suspense } from "react";
+import { Fragment, Suspense } from "react";
 import githubRepoName from "./infoStore/githubReponames";
 import Link from "next/link";
 import { createClient } from '@supabase/supabase-js'
+import LocalDateComp from "./clientCompsHomePage/LocalDateComp";
 
-type AuthorChangesType = {[key: string]: [string, string, string][]};
+type UpdatesType = [string, {fName: string, status: string}[]][]; //first string is date
+type AuthorChangesType = {[key: string]: UpdatesType};
 const recentCommitsTTL = 86400000 //ms
 
 async function getLast5Commits(repoName: string) {
@@ -35,25 +37,43 @@ async function getAuthorChanges() {
   let authorChanges: AuthorChangesType = {};
 
   for (let author of authors){
-    let updatesToAdd: [string,string, string][] = [];
+    let updatesToAdd: UpdatesType = [];
     let last5Commits = await getLast5Commits(githubRepoName[author]);
     if (!last5Commits) continue;
     for (let commit of last5Commits) {
       let commitDetails = await getCommitsDetails(githubRepoName[author], commit["sha"]);
       if (!commitDetails) continue;
       let date: string = commitDetails["commit"]["committer"]["date"];
+      let curDateUpdates: {fName: string, status: string}[] = [];
       for (let file of commitDetails.files) {
+        let shortenedFileName: string = "";
+        let status = null;
         if (file["filename"].endsWith(".md")) {
-          let shortenedFileName = file["filename"].substring(0, file["filename"].length - 3);
-          let formattedFileName = shortenedFileName.replaceAll("/", " > ");
-          updatesToAdd.push([formattedFileName, file["status"], date]);
+          shortenedFileName = file["filename"].substring(0, file["filename"].length - 3);
+          status = file["status"];
         }
         else if (file["filename"].endsWith("/order.txt")) {
-          let shortenedFileName = file["filename"].substring(0, file["filename"].length - 10);
+          shortenedFileName = file["filename"].substring(0, file["filename"].length - 10);
+          status = file["status"];
+          if (status === "modified") status = "ordering";
+        }
+        else if (file["filename"] === "order.txt") {
+          shortenedFileName = "/";
+          status = "ordering";
+        }
+        if (status === "removed") {
+          // suppose shortenedFileName is story1 > chapter1
+          // if story1 is already in list and being removed then ignore story1 > chapter1
+          if (curDateUpdates.some(prevUp => (prevUp.status === "removed") && shortenedFileName.startsWith(prevUp.fName))) continue;
+          // if story1 > chapter1 is being removed then ignore story1 > chapter1 > subchap1 (no need to mention subroutes)
+          curDateUpdates = curDateUpdates.filter(prevUp => !prevUp.fName.startsWith(shortenedFileName));
+        }
+        if (shortenedFileName.length) { 
           let formattedFileName = shortenedFileName.replaceAll("/", " > ");
-          updatesToAdd.push([formattedFileName, "ordering", date]);
+          curDateUpdates.push({fName: formattedFileName, status: status});
         }
       }
+      updatesToAdd.push([date, curDateUpdates]);
     } 
     authorChanges[author] = updatesToAdd;
   }
@@ -73,15 +93,21 @@ async function recentEditsTable() {
 
   return <section id="changesContainer">
     {authors.map((a, i)=>{
-      return <table className="updateLogOneAuthor" key={i}>
-        <thead><tr><th colSpan={2}>Changes by {a}</th></tr></thead>
-        <>{authorChanges[a].map((fileInfo, i) => {
-          return <tbody key={i}>
-            <tr><td colSpan={2}>{fileInfo[0]}</td></tr>
-            <tr><td>{fileInfo[2]}</td><td>{fileInfo[1]}</td></tr>
-          </tbody>;
-        })}</>
-      </table>;
+      return <div className="updateLogOneAuthor" key={i}>
+        <h3>Changes by {a}</h3>
+        {authorChanges[a].map((updateInfo, i) => {
+          return <div key={i} className="updateLogOneDate">
+            <span className="dateHolder"><LocalDateComp dateString={updateInfo[0]}/></span>
+            {updateInfo[1].map((specificUpInfo, j) => {
+              if (specificUpInfo.fName === " > ") return <span key={j} className="changedRootOrdering">Changed root ordering.</span>;
+              return <Fragment key={j}>
+                <span className="fNameContainer">{specificUpInfo.fName}</span> 
+                <span className="statusContainer">{specificUpInfo.status}</span>
+              </Fragment>;
+            })}
+          </div>;
+        })}
+      </div>;
     })}
   </section>;
 }
