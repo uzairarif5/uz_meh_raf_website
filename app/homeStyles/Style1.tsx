@@ -37,14 +37,18 @@ export default async function Style1() {
     </header>
     <hr/>
     <main>
-      <section id={styles.linksContainer}>
+      <div id={styles.linksContainer}>
         <Link style={{backgroundImage: "url(/uzair.jpg)"}} href={"./Uzair"}><span>Uzair</span></Link>
         <Link style={{backgroundImage: "url(/mehrab.jpg)"}}  href={"./Mehrab"}><span>Mehrab</span></Link>
         <Link style={{backgroundImage: "url(/rafay.jpg)"}}  href={"./Rafay"}><span>Rafay</span></Link>
-      </section>
+        <section id={styles.aboutUs}>
+          <header><Image width={30} height={30} src={"/banana.gif"} alt=""/><h4>About Us</h4></header>
+          <p>We are three guys and only one of us is cool.</p>
+        </section>
+      </div>
       <div id={styles.verticalLine}></div>
       <section id={styles.updatesSection}>
-        <h2>Latest updates</h2>
+        <header><Image width={40} height={40} src={"/star.gif"} alt=""/><h2>Latest updates</h2></header>
         <Suspense fallback={<></>}>{await recentEditsTable()}</Suspense>
       </section>
     </main>
