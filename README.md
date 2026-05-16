@@ -8,6 +8,9 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.8.0:
+- Made majors changes in the looks and the coding structure of the website.
+
 update 0.7.0:
 - Improved update table.
 

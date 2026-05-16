@@ -1,0 +1,96 @@
+#body {
+  background-color: #999;
+  color: black;
+  box-sizing: border-box;
+  padding: 1px;
+  min-height: 100vh;
+  margin: 0;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    h1 {
+      font-weight: normal;
+      font-size: 50px;
+      margin: 20px 10px;
+      display: block;
+      width: fit-content;
+    }
+
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 250px 2px auto;
+
+    #linksContainer{
+      display: flex;
+      flex-direction: column;
+      padding-top: 10px;
+      align-items: center;
+
+      a{
+        display: block;
+        width: 220px;
+        height: 220px;
+        background-size: contain;
+        font-size: 18px;
+        text-align: right;
+
+        span{
+          background-color: rgba(100,100,100,0.9);
+          padding: 0px 3px;
+        }
+      }
+    }
+
+    #verticalLine {
+      border: inset 1px gray;
+    }
+
+    #updatesSection {
+
+      h2{
+        text-align: center;
+        font-size: 30px;
+        margin: 20px auto;
+        text-decoration: underline;
+        font-weight: normal;
+      }
+
+      #changesContainer {
+        margin: 10px;
+        margin-bottom: 50px;
+        border: dashed 2px black;
+
+        .updateLogOneDate{
+          margin-bottom: 20px;
+          font-size: 16px;
+
+          .dateAndAuthorContainer{
+            padding-left: 2px;
+            color: #333;
+
+            .authorHolder{
+              padding: 5px;
+              font-style: italic;
+            }
+          }
+
+          .changedRootOrdering, .fAndStatusContainer{
+            display: flex;
+            justify-content: space-between;
+            padding: 0px 24px 0px 10px;
+            font-size: 18px;
+
+            &:hover {
+              background-color: #aaa;
+            }
+          }
+        }
+      }
+    }
+  }
+}

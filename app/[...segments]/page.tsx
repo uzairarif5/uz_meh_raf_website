@@ -1,6 +1,5 @@
-import "./main.css";
 import githubRepoName from "../infoStore/githubReponames";
-import Main from "./Main";
+import Main from "./Style1";
 
 export default async function Page({params}: { params: Promise<{ segments: string[] }>}) {
   const authors = Object.keys(githubRepoName);
