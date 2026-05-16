@@ -90,12 +90,12 @@
         margin: 10px;
         margin-bottom: 50px;
         border: dashed 2px black;
+        padding: 4px;
 
         .updateLogOneDate{
           margin-bottom: 20px;
 
           .dateAndAuthorContainer{
-            padding-left: 2px;
             color: #333;
             font-size: 16px;
 
@@ -108,8 +108,9 @@
           .changedRootOrdering, .fAndStatusContainer{
             display: flex;
             justify-content: space-between;
-            padding: 0px 24px 0px 10px;
+            padding: 0px 4px 0px 8px;
             font-size: 18px;
+            column-gap: 20px;
 
             &:hover {
               background-color: #aaa;
