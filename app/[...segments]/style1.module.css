@@ -46,6 +46,7 @@
   }
 
   main{
+    box-sizing: border-box;
     min-height: 100px;
     width: 96%;
     margin: auto;
@@ -66,7 +67,7 @@
 
     a{
       text-align: center;
-      width: 200px;
+      width: 150px;
       display: block;
       padding: 10px;
       border: outset 2px black;

@@ -93,11 +93,11 @@
 
         .updateLogOneDate{
           margin-bottom: 20px;
-          font-size: 16px;
 
           .dateAndAuthorContainer{
             padding-left: 2px;
             color: #333;
+            font-size: 16px;
 
             .authorHolder{
               padding: 5px;
@@ -113,6 +113,46 @@
 
             &:hover {
               background-color: #aaa;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media (orientation: portrait) {
+  #body {
+    main {
+      grid-template-columns: 120px 2px auto;
+
+     #linksContainer {
+      a {
+        width: 100px;
+        height: 100px;
+      }
+      #aboutUs{
+        width: 100px;
+
+        h4 {
+          font-size: 13px;
+        }
+
+        p {
+          font-size: 12px;
+        }
+      }
+     } 
+
+      #updatesSection{
+        #changesContainer{
+          .updateLogOneDate{
+            .dateAndAuthorContainer{
+              font-size: 14px;
+            }
+            .changedRootOrdering, .fAndStatusContainer{
+              font-size: 14px;
             }
           }
         }

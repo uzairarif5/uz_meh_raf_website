@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 
 type UpdateType = {fName: string, status: string}[];
 type UpdateTypeWithAuthor = {author: string, changes: UpdateType};
-export type AuthorChangesType = [Date, UpdateTypeWithAuthor][];
+export type AuthorChangesType = [number, UpdateTypeWithAuthor][]; //first number is Date
 const supabaseURL = "https://hnvoklrpquwiekwyjvmu.supabase.co/storage/v1/object/public/uz-meh-raf-storage_bucket/commits.json";
 const useShortRecentsCommitsTTL = false //used for testing
 const recentCommitsTTL = useShortRecentsCommitsTTL ? 1000 : 86400000 //ms
@@ -28,15 +28,15 @@ async function getCommitsDetails(repoName: string, sha: string) {
   }).then(res => res.json()) || null;
 }
 
-function addDateToAuthorChanges(authorChanges: AuthorChangesType, date: Date, data: UpdateTypeWithAuthor) {
-  const toAdd: [Date, UpdateTypeWithAuthor] = [date, data];
+function addDateToAuthorChanges(authorChanges: AuthorChangesType, epochTime: number, data: UpdateTypeWithAuthor) {
+  const toAdd: [number, UpdateTypeWithAuthor] = [epochTime, data];
   if (authorChanges.length === 0) authorChanges.push(toAdd);
   else if (authorChanges.length === 1) {
-    if (date > authorChanges[0][0]) authorChanges.unshift(toAdd);
+    if (epochTime > authorChanges[0][0]) authorChanges.unshift(toAdd);
     else authorChanges.push(toAdd);
   }
   else {
-    const insertIdx = authorChanges.findIndex(el => el[0] < date);
+    const insertIdx = authorChanges.findIndex(el => el[0] < epochTime);
     authorChanges.splice(insertIdx, 0, toAdd);
   }
 }
@@ -85,7 +85,7 @@ export async function getAuthorChanges() {
           curDateUpdates.push({fName: formattedFileName, status: status});
         }
       }
-      addDateToAuthorChanges(authorChanges, date, {author: author, changes: curDateUpdates});
+      addDateToAuthorChanges(authorChanges, date.getTime(), {author: author, changes: curDateUpdates});
     } 
   }
 

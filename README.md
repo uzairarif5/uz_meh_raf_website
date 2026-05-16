@@ -8,6 +8,11 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.10.0:
+- Edited UI for mobile.
+- Made css changes for both desktop and mobile.
+- In home page, date is now passed as string.
+
 update 0.9.0:
 - Added some gifs and an "about us" section in the home page.
 

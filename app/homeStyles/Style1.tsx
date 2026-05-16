@@ -13,7 +13,7 @@ async function recentEditsTable() {
     authorChanges.map((el, i) => {
       return <div key={i} className={styles.updateLogOneDate}>
         <div className={styles.dateAndAuthorContainer}>
-          <span className={styles.dateHolder}><LocalDateComp dateOb={el[0]}/></span>
+          <span className={styles.dateHolder}><LocalDateComp epochTime={el[0]}/></span>
           <span className={styles.authorHolder}>by {el[1].author}</span>
         </div>
         {el[1].changes.map((update, j) => {
