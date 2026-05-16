@@ -6,6 +6,10 @@ import { useEffect, useRef, useState } from "react";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { style1Fonts } from "../infoStore/fonts";
+import Image from 'next/image';
+import bookImage from "@/public/book.gif";
+import leftImage from "@/public/left.gif";
+import homeImage from "@/public/home.gif";
 
 const EMPTY_NAVLINKS: string[] = [];
 
@@ -69,7 +73,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
   }, []);
 
   return <body className={style1Fonts.CRIMSON_PRO_FONT} id={styles.body}>
-    <header><p>{params.segments[0]}'s blogs</p></header>
+    <header><Image src={bookImage} alt="" width={20} height={20}/><p>{params.segments[0]}'s blogs</p></header>
     <nav id={styles.buttonsContainer}>
       {
         navLinks.current.map((link, i)=>{
@@ -86,8 +90,8 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     </nav>
     <main dangerouslySetInnerHTML={{__html: content}}></main>
     <footer>
-      <Link href={"./"} id={styles.BackButton}>Back</Link>
-      <Link href={"/"} id={styles.homeButton}>home page</Link>
+      <Link href={"./"} id={styles.BackButton}><Image src={leftImage} alt="" width={20} height={20}/>Back</Link>
+      <Link href={"/"} id={styles.homeButton}><Image src={homeImage} alt="" width={20} height={20}/> home page</Link>
     </footer>
   </body>;
 }

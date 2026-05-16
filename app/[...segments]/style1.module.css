@@ -6,13 +6,24 @@
   min-height: 100vh;
   margin: 0;
 
-  header p{
-    margin: 20px;
-    text-align: center;
-    font-size: 20px;
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      background-color: white;
+    }
+
+    p {
+      margin: 20px 4px;
+      text-align: center;
+      font-size: 20px;
+    }
   }
 
   #buttonsContainer{
+    background-color: #888;
     display: flex;
     align-items: center;
     border-top: inset 2px black;
@@ -25,9 +36,9 @@
     .navButton{
       background-color: #999;
       flex-shrink: 0;
-      border: outset 2px black;
-      height: 100px;
-      width: 100px;
+      border: outset 2px #000;
+      height: 120px;
+      width: 120px;
       position: relative;
       margin: 0px 20px;
 
@@ -41,6 +52,8 @@
         background-color: transparent;
         border: none;
         font-size: 16px;
+        text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+        font-weight: bold;
       }
     }
   }
@@ -68,7 +81,8 @@
     a{
       text-align: center;
       width: 150px;
-      display: block;
+      display: flex;
+      justify-content: center;
       padding: 10px;
       border: outset 2px black;
 
