@@ -59,6 +59,7 @@
   }
 
   main{
+    position: relative;
     box-sizing: border-box;
     min-height: 100px;
     width: 96%;
@@ -66,6 +67,13 @@
     border: dashed 2px black;
     margin-bottom: 20px;
     padding: 10px;
+
+    img:first-child {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      opacity: 0.5;
+    }
 
     h1{
       font-size: 30px;

@@ -10,6 +10,7 @@ import Image from 'next/image';
 import bookImage from "@/public/book.gif";
 import leftImage from "@/public/left.gif";
 import homeImage from "@/public/home.gif";
+import featherPen from "@/public/feather_pen.png";
 
 const EMPTY_NAVLINKS: string[] = [];
 
@@ -88,7 +89,10 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         })
       }
     </nav>
-    <main dangerouslySetInnerHTML={{__html: content}}></main>
+    <main>
+      <Image src={featherPen} alt="" width={45} height={45}/>
+      <div dangerouslySetInnerHTML={{__html: content}}></div>
+    </main>
     <footer>
       <Link href={"./"} id={styles.BackButton}><Image src={leftImage} alt="" width={20} height={20}/>Back</Link>
       <Link href={"/"} id={styles.homeButton}><Image src={homeImage} alt="" width={20} height={20}/> home page</Link>
