@@ -36,12 +36,12 @@ You can specify width and/or height:
 <ul>
   <li>Here is a different syntax for bullet points</li>
   <li>Point two</li>
-  <li>li stands for list item.</li>
+  <li>li stands for "list item".</li>
 </ul>
 
 <ol>
-  <li>If you use ol instead of ul, the points will be order</li>
-  <li>ol stands for ordered list, while ul stands for unordered list</li>
+  <li>If you use ol instead of ul, the points will be ordered.</li>
+  <li>ol stands for "ordered list", while ul stands for "unordered list".</li>
 </ol>
 
 There are other styles as well: 

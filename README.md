@@ -8,6 +8,9 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.10.4:
+- Added `howToUseMd.md` for my friends.
+
 update 0.10.3:
 - Added an image in the `main` html tag of hte blog page.
 
