@@ -31,9 +31,9 @@ async function recentEditsTable() {
 export default async function Style1() {
   return <body className={style1Fonts.CRIMSON_PRO_FONT} id={styles.body}>
     <header>
-      <Image width={40} height={40} src={"/writing1.gif"} alt=""/>
+      <Image width={40} height={40} src={"/writing1.gif"} alt="" unoptimized/>
       <h1>Blog website</h1>
-      <Image width={50} height={50} src={"/writing2.gif"} alt=""/>
+      <Image width={50} height={50} src={"/writing2.gif"} alt="" unoptimized/>
     </header>
     <hr/>
     <main>
@@ -42,13 +42,13 @@ export default async function Style1() {
         <Link style={{backgroundImage: "url(/mehrab.jpg)"}}  href={"./Mehrab"}><span>Mehrab</span></Link>
         <Link style={{backgroundImage: "url(/rafay.jpg)"}}  href={"./Rafay"}><span>Rafay</span></Link>
         <section id={styles.aboutUs}>
-          <header><Image width={30} height={30} src={"/banana.gif"} alt=""/><h4>About Us</h4></header>
+          <header><Image width={30} height={30} src={"/banana.gif"} alt="" unoptimized/><h4>About Us</h4></header>
           <p>We are three guys and only one of us is cool.</p>
         </section>
       </div>
       <div id={styles.verticalLine}></div>
       <section id={styles.updatesSection}>
-        <header><Image width={40} height={40} src={"/star.gif"} alt=""/><h2>Latest updates</h2></header>
+        <header><Image width={40} height={40} src={"/star.gif"} alt="" unoptimized/><h2>Latest updates</h2></header>
         <Suspense fallback={<></>}>{await recentEditsTable()}</Suspense>
       </section>
     </main>

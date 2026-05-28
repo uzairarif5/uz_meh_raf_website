@@ -4,6 +4,7 @@ import styles from "./style1.module.css";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { marked } from "marked";
+import markedFootnote from 'marked-footnote';
 import DOMPurify from "dompurify";
 import { style1Fonts } from "../infoStore/fonts";
 import Image from 'next/image';
@@ -37,18 +38,19 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     .then(async (res) => {
       if (res === ERROR_TEXT) changeContent(PREFILLED_CONTENT.error);
       else {
-        const rawHtml = await marked.parse(res, {async: true});
+        const rawHtml = await marked.use(markedFootnote()).parse(res, {async: true});
+        console.log(rawHtml);
         const safeHtml = DOMPurify.sanitize(rawHtml, {
-          ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'h1', 'h2', 'h3', 'ul', 'ol', 'li','img'],
-          ALLOWED_ATTR: ['width','height','src','href','title','alt'],
+          ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'br', 'ul', 'ol', 'li','img', 'b', 'i', 'em', 'strong', 
+            'del', 'code', 'pre', 'hr', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'q', 'blockquote'],
+          ALLOWED_ATTR: ['width', 'height', 'src', 'href', 'title', 'alt', 'rowspan', 'colspan']
         });
         changeContent(safeHtml);
       }
     })
     .catch(err => {
-      fetch(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`);
       console.error(err);
-      console.log("jsdelivr purged!");
+      purgeJsdelivr(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`);
     });
   };
 
@@ -67,9 +69,8 @@ export default function Main(params: {repoName: string, segments: string[]}) {
       }
     })
     .catch(err => {
-      fetch(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
       console.error(err);
-      console.log("jsdelivr purged!");
+      purgeJsdelivr(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
     });
   }, []);
 
@@ -98,4 +99,15 @@ export default function Main(params: {repoName: string, segments: string[]}) {
       <Link href={"/"} id={styles.homeButton}><Image src={homeImage} alt="" width={20} height={20}/> home page</Link>
     </footer>
   </body>;
+}
+
+
+function purgeJsdelivr(path: string) {
+  console.log("purging jsdelivr...");
+  fetch(path)
+  .then(() => { console.log("jsdelivr purged"); })
+  .catch((err) => { 
+    console.log("Was not able to purge"); 
+    console.error(err);
+  });
 }

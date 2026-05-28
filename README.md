@@ -9,10 +9,13 @@ Versioning is done using "npm version [new-version] --git-tag-version false"
 Updates follow this format: [major change].[minor change].[bug fixes].
 
 update 0.10.4:
-- Added `howToUseMd.md` for my friends.
+- Removed `howToUseMd.md` (it is now in the "Uzair blogs" repository).
+- Added many more element options.
+- Added 'colspan' and 'rowspan' attributes for tables.
+- Changed some of the element's styling.
 
 update 0.10.3:
-- Added an image in the `main` html tag of hte blog page.
+- Added an image in the `main` html tag of the blog page.
 
 update 0.10.2:
 - Made css changes and added more gifs in the story page.
