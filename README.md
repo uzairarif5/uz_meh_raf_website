@@ -8,6 +8,10 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.10.5:
+- Changed the description.
+- REmoved a `console.log`.
+
 update 0.10.4:
 - Removed `howToUseMd.md` (it is now in the "Uzair blogs" repository).
 - Added many more element options.

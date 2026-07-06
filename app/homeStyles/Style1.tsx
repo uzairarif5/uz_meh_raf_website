@@ -43,7 +43,7 @@ export default async function Style1() {
         <Link style={{backgroundImage: "url(/rafay.jpg)"}}  href={"./Rafay"}><span>Rafay</span></Link>
         <section id={styles.aboutUs}>
           <header><Image width={30} height={30} src={"/banana.gif"} alt="" unoptimized/><h4>About Us</h4></header>
-          <p>We are three guys and only one of us is cool.</p>
+          <p>Just three daydreamers trying to navigate the cesspit that is the internet today.<br/>Come and get lost in thought yourself, it will be feeing.</p>
         </section>
       </div>
       <div id={styles.verticalLine}></div>

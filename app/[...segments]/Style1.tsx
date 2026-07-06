@@ -39,7 +39,6 @@ export default function Main(params: {repoName: string, segments: string[]}) {
       if (res === ERROR_TEXT) changeContent(PREFILLED_CONTENT.error);
       else {
         const rawHtml = await marked.use(markedFootnote()).parse(res, {async: true});
-        console.log(rawHtml);
         const safeHtml = DOMPurify.sanitize(rawHtml, {
           ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'br', 'ul', 'ol', 'li','img', 'b', 'i', 'em', 'strong', 
             'del', 'code', 'pre', 'hr', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'q', 'blockquote'],
