@@ -30,7 +30,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
   function getMD(fileName: string){
     changeContent(PREFILLED_CONTENT.waitingForMd);
     const filePath = params.segments.slice(1).join("/") + "/" + fileName + ".md";
-    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`)
+    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`, { cache: "no-cache" })
     .then(res => {
       if (res.ok) return res.text();
       return ERROR_TEXT;
@@ -55,7 +55,7 @@ export default function Main(params: {repoName: string, segments: string[]}) {
 
   useEffect(()=>{
     const path = params.segments.slice(1).join("/");
-    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`)
+    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`, { cache: "no-cache" })
     .then(res => {
       if (res.ok) return res.text();
       return ERROR_TEXT;
