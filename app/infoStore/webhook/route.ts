@@ -2,9 +2,8 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   try{
-    const headCommit = body["head_commit"];
-    console.log(body);
-    console.log(headCommit["modified"]);
+    console.log(body["repository"]["name"]);
+    console.log(body["head_commit"]["modified"]);
     
     return new Response(JSON.stringify({ success: true}), {
       status: 200,
