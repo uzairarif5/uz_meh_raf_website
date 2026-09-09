@@ -14,7 +14,7 @@ async function getLast5Commits(repoName: string) {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${process.env.ACCESS_TOKEN}`,
-      }
+    }
   }).then(res => res.json()) || null;
 }
 
