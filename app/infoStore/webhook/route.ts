@@ -2,8 +2,12 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   try{
-    console.log(body["repository"]["name"]);
-    console.log(body["head_commit"]["modified"]);
+    const repoName = body["repository"]["name"];
+    const filesModified = body["head_commit"]["modified"];
+
+    for (const fileName of filesModified) {
+      console.log(`https://purge.jsdelivr.net/gh/uzairarif5/${repoName}@main/${fileName}`)
+    }
     
     return new Response(JSON.stringify({ success: true}), {
       status: 200,
