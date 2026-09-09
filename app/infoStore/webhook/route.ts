@@ -3,7 +3,7 @@ export async function POST(request: Request) {
 
   try{
     const headCommit = body["head_commit"];
-    console.log(headCommit["url"]);
+    console.log(body);
     console.log(headCommit["modified"]);
     
     return new Response(JSON.stringify({ success: true}), {
