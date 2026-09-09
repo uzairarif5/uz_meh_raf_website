@@ -6,6 +6,6 @@ export default async function Page({params}: { params: Promise<{ segments: strin
   const { segments } = await params;
 
   if (!(authors.includes(segments[0]))) return <p>Custom error: check segments[0]</p>;
-  
+
   return <Main repoName={githubRepoName[segments[0]]} segments={segments}/>
 }
