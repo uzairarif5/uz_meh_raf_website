@@ -5,6 +5,8 @@ export async function POST(request: Request) {
     const repoName = body["repository"]["name"];
     const filesModified = body["head_commit"]["modified"];
 
+    console.log(body["head_commit"]);
+
     for (const fileName of filesModified) {
       fetch(`https://purge.jsdelivr.net/gh/uzairarif5/${repoName}@main/${fileName}`);
     }
