@@ -6,7 +6,7 @@ type UpdateTypeWithAuthor = {author: string, changes: UpdateType};
 export type AuthorChangesType = [number, UpdateTypeWithAuthor][]; //first number is Date
 const supabaseURL = "https://hnvoklrpquwiekwyjvmu.supabase.co/storage/v1/object/public/uz-meh-raf-storage_bucket/commits.json";
 const useShortRecentsCommitsTTL = false //used for testing
-const recentCommitsTTL = useShortRecentsCommitsTTL ? 1000 : 86400000 //ms
+const recentCommitsTTL = useShortRecentsCommitsTTL ? 1000 : 3600000 //ms
 
 async function getLast5Commits(repoName: string) {
   return await fetch(`https://api.github.com/repos/uzairarif5/${repoName}/commits?per_page=5&page=1`, {
