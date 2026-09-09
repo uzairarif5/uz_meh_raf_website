@@ -10,3 +10,6 @@
 [submodule "app/_UzairContent"]
 	path = app/_UzairContent
 	url = https://github.com/uzairarif5/uz_mef_raf_Uzair_Content.git
+[submodule "uz_meh_raf_Uzair_Content"]
+	path = uz_meh_raf_Uzair_Content
+	url = https://github.com/uzairarif5/uz_meh_raf_Uzair_Content.git
