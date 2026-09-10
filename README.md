@@ -8,6 +8,10 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.14.0:
+- Changed the main background.
+- Made other CSS changes.
+
 update 0.13.1:
 - CSS changes:
   - Added x overflow to breadcrumb navigation.

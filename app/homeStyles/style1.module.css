@@ -1,4 +1,6 @@
 #body {
+  background-image: url("/stars.jpg");
+  background-size: cover;
   background-color: #999;
   color: black;
   box-sizing: border-box;
@@ -6,10 +8,12 @@
   min-height: 100vh;
   margin: 0;
 
-  header {
+  #topHeader {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: dashed 2px #aaa;
+    margin-bottom: 20px;
     
     h1 {
       font-weight: normal;
@@ -17,13 +21,14 @@
       margin: 20px 10px;
       display: block;
       width: fit-content;
+      color: white;
     }
 
   }
 
   main {
     display: grid;
-    grid-template-columns: 250px 2px auto;
+    grid-template-columns: 250px auto;
 
     #linksContainer{
       display: flex;
@@ -47,10 +52,11 @@
 
       #aboutUs{
         margin-top: 10px;
-        border: dashed 2px black;
+        border: solid 2px #444;
         padding: 6px;
         width: 200px;
         box-sizing: border-box;
+        background-color: #888;
 
         img{
           margin-right: 5px;
@@ -67,15 +73,13 @@
       }
     }
 
-    #verticalLine {
-      border: inset 1px gray;
-    }
-
     #updatesSection {
+      border-left: dashed 2px #aaa;
 
       header{
         display: flex;
         justify-content: center;
+        align-items: center;
 
         h2{
           display: inline;
@@ -83,14 +87,17 @@
           margin: 20px 0px;
           text-decoration: underline;
           font-weight: normal;
+          color: white;
         }
       }
 
       #changesContainer {
         margin: 10px;
         margin-bottom: 50px;
-        border: dashed 2px black;
+        border: solid 2px #444;
         padding: 4px;
+        background-color: #888;
+
 
         .updateLogOneDate{
           margin-bottom: 20px;
