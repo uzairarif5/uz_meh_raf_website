@@ -70,6 +70,10 @@
           font-weight: normal;
           text-decoration: underline;
         }
+
+        p {
+          margin-top: 0px;
+        }
       }
     }
 
@@ -146,11 +150,13 @@
         width: 100px;
         height: 100px;
       }
+
       #aboutUs{
         width: 100px;
 
         h4 {
-          font-size: 13px;
+          font-size: 14px;
+          line-height: 28px;
         }
 
         p {
