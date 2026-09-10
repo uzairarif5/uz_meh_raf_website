@@ -5,6 +5,7 @@ import LocalDateComp from "../clientCompsHomePage/LocalDateComp";
 import { AuthorChangesType, getAuthorChanges } from "../infoStore/getUpdatesFormat";
 import { style1Fonts } from "../infoStore/fonts";
 import Image from 'next/image';
+import githubRepoName from "../infoStore/githubReponames";
 
 async function recentEditsTable() {
   const authorChanges: AuthorChangesType = await getAuthorChanges();
@@ -17,11 +18,17 @@ async function recentEditsTable() {
           <span className={styles.authorHolder}>by {el[1].author}</span>
         </div>
         {el[1].changes.map((update, j) => {
-          if (update.fName === " > ") return <span key={j} className={styles.changedRootOrdering}>Changed root ordering.</span>;
-          return <div key={j} className={styles.fAndStatusContainer}>
+          if (update.fName === "/") return <span key={j} className={styles.changedRootOrdering}>Changed root ordering.</span>;
+          if (update.status === "removed") return <div key={j} className={styles.fAndStatusContainer}>
             <span className={styles.fNameContainer}>{update.fName}</span> 
             <span className={styles.statusContainer}>{update.status}</span>
           </div>;
+          const pathName = update.fName.substring(0, update.fName.lastIndexOf("/"));
+          const linkName = `${el[1].author}/${pathName}`;
+          return <a key={j} className={styles.fAndStatusContainer} href={linkName}>
+            <span className={styles.fNameContainer}>{update.fName}</span> 
+            <span className={styles.statusContainer}>{update.status}</span>
+          </a>;
         })}
       </div>;
     })
@@ -43,7 +50,7 @@ export default async function Style1() {
         <Link style={{backgroundImage: "url(/rafay.jpg)"}}  href={"./Rafay"}><span>Rafay</span></Link>
         <section id={styles.aboutUs}>
           <header><Image width={30} height={30} src={"/banana.gif"} alt="" unoptimized/><h4>About Us</h4></header>
-          <p>Just three daydreamers trying to navigate the cesspit that is the internet today.<br/>Come and get lost in thought yourself, it will be feeing.</p>
+          <p>Just three daydreamers trying to navigate the cesspit that is the internet today.<br/>Come and get lost in thought yourself, it will be freeing.</p>
         </section>
       </div>
       <div id={styles.verticalLine}></div>

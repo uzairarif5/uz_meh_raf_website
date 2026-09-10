@@ -111,9 +111,15 @@
             padding: 0px 4px 0px 8px;
             font-size: 18px;
             column-gap: 20px;
+            color: #000 !important;
+            text-decoration: none;
 
             &:hover {
               background-color: #aaa;
+            }
+
+            &:visited {
+              color: #000;
             }
           }
         }

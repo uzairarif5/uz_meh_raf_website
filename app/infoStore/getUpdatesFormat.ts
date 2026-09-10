@@ -1,7 +1,8 @@
 import githubRepoName from "./githubReponames";
 import { createClient } from '@supabase/supabase-js';
 
-type UpdateType = {fName: string, status: string}[];
+type StatusType = "modified" | "removed" | "ordering";
+type UpdateType = {fName: string, status: StatusType}[];
 type UpdateTypeWithAuthor = {author: string, changes: UpdateType};
 export type AuthorChangesType = [number, UpdateTypeWithAuthor][]; //first number is Date
 const supabaseURL = "https://hnvoklrpquwiekwyjvmu.supabase.co/storage/v1/object/public/uz-meh-raf-storage_bucket/commits.json";
@@ -59,7 +60,7 @@ export async function getAuthorChanges() {
       let curDateUpdates: UpdateType = [];
       for (let file of commitDetails.files) {
         let shortenedFileName: string = "";
-        let status = null;
+        let status: StatusType = "modified";
         if (file["filename"].endsWith(".md")) {
           shortenedFileName = file["filename"].substring(0, file["filename"].length - 3);
           status = file["status"];
@@ -80,10 +81,7 @@ export async function getAuthorChanges() {
           // if story1 > chapter1 is being removed then ignore story1 > chapter1 > subchap1 (no need to mention subroutes)
           curDateUpdates = curDateUpdates.filter(prevUp => !prevUp.fName.startsWith(shortenedFileName));
         }
-        if (shortenedFileName.length) { 
-          let formattedFileName = shortenedFileName.replaceAll("/", " > ");
-          curDateUpdates.push({fName: formattedFileName, status: status});
-        }
+        if (shortenedFileName.length) curDateUpdates.push({fName: shortenedFileName, status: status});
       }
       addDateToAuthorChanges(authorChanges, date.getTime(), {author: author, changes: curDateUpdates});
     } 
