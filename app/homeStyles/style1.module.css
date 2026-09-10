@@ -139,7 +139,7 @@
 @media (orientation: portrait) {
   #body {
     main {
-      grid-template-columns: 120px 2px auto;
+      grid-template-columns: 120px auto;
 
      #linksContainer {
       a {
