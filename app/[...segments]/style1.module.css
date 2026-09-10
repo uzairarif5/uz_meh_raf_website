@@ -23,39 +23,51 @@
     }
   }
 
-  #buttonsContainer{
+  #navContainer {
     background-color: #888;
-    display: flex;
-    align-items: center;
-    border-top: inset 2px black;
-    border-bottom: inset 2px black;
     margin-bottom: 20px;
-    overflow-x: scroll;
 
-    .navButton{
-      background-color: #999;
-      flex-shrink: 0;
-      border: outset 2px #000;
-      height: 140px;
-      width: 140px;
-      position: relative;
-      margin: 0px 20px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+    #breadcrumbContainer{
+      padding: 4px;
+      font-size: 15px;
+      color: #333;
+      border-bottom: solid 1px #555;
+      border-top: inset 2px black;
+      border-bottom: inset 2px black;
+    }
 
-      a, button{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-        cursor: pointer;
-        background-color: transparent;
-        border: none;
-        font-size: 16px;
-        text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
-        font-weight: bold;
-        text-align: center;
+    #buttonsContainer{
+      display: flex;
+      align-items: center;
+      overflow-x: scroll;
+      border-top: inset 2px black;
+      border-bottom: inset 2px black;
+
+      .navButton{
+        background-color: #999;
+        flex-shrink: 0;
+        border: outset 2px #000;
+        height: 140px;
+        width: 140px;
+        position: relative;
+        margin: 0px 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        a, button{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 100%;
+          cursor: pointer;
+          background-color: transparent;
+          border: none;
+          font-size: 16px;
+          text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+          font-weight: bold;
+          text-align: center;
+        }
       }
     }
   }

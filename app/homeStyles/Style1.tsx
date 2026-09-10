@@ -5,7 +5,6 @@ import LocalDateComp from "../clientCompsHomePage/LocalDateComp";
 import { AuthorChangesType, getAuthorChanges } from "../infoStore/getUpdatesFormat";
 import { style1Fonts } from "../infoStore/fonts";
 import Image from 'next/image';
-import githubRepoName from "../infoStore/githubReponames";
 
 async function recentEditsTable() {
   const authorChanges: AuthorChangesType = await getAuthorChanges();

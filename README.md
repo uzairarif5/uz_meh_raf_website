@@ -8,8 +8,11 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.13.0:
+- Added breadcrumb navigation. 
+
 update 0.12.0:
-- update rows are now links.
+- Update rows are now links.
 
 update 0.11.11:
 - Reduced `recentCommitsTTL`.

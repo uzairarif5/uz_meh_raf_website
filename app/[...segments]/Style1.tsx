@@ -12,6 +12,7 @@ import bookImage from "@/public/book.gif";
 import leftImage from "@/public/left.gif";
 import homeImage from "@/public/home.gif";
 import featherPen from "@/public/feather_pen.png";
+import { usePathname } from "next/navigation";
 
 const EMPTY_NAVLINKS: string[] = [];
 
@@ -26,6 +27,37 @@ const ERROR_TEXT = "ERROR_TEXT";
 export default function Main(params: {repoName: string, segments: string[]}) {
   const navLinks = useRef<string[]>(EMPTY_NAVLINKS);
   const [content, changeContent] = useState(PREFILLED_CONTENT.waitingForLinks);
+  const rawPathname = usePathname();
+  const pathnameArr = decodeURI(rawPathname).split("/");
+  const breadcrumbNav = <nav id={styles.breadcrumbContainer}>{
+    pathnameArr.map((s, i) => {
+      if (!i) return null;
+      return <span key={i}>
+        {i == 1 ? "" : " > "}
+        <a href={pathnameArr.slice(0, i+1).join("/")}>{s}</a>
+      </span>;
+    })
+  }</nav>;
+
+  useEffect(()=>{
+    const path = params.segments.slice(1).join("/");
+    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`, { cache: "no-cache" })
+    .then(res => {
+      if (res.ok) return res.text();
+      return ERROR_TEXT;
+    })
+    .then(res => { 
+      if (res === ERROR_TEXT) changeContent(PREFILLED_CONTENT.error);
+      else {
+        navLinks.current = res.split("\n");
+        changeContent("");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      purgeJsdelivr(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
+    });
+  }, []);
 
   function getMD(fileName: string){
     changeContent(PREFILLED_CONTENT.waitingForMd);
@@ -53,53 +85,35 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     });
   };
 
-  useEffect(()=>{
-    const path = params.segments.slice(1).join("/");
-    fetch(`https://cdn.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`, { cache: "no-cache" })
-    .then(res => {
-      if (res.ok) return res.text();
-      return ERROR_TEXT;
-    })
-    .then(res => { 
-      if (res === ERROR_TEXT) changeContent(PREFILLED_CONTENT.error);
-      else {
-        navLinks.current = res.split("\n");
-        changeContent("");
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      purgeJsdelivr(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
-    });
-  }, []);
-
   return <body className={style1Fonts.CRIMSON_PRO_FONT} id={styles.body}>
     <header><Image src={bookImage} alt="" width={20} height={20}/><p>{params.segments[0]}'s blogs</p></header>
-    <nav id={styles.buttonsContainer}>
-      {
-        navLinks.current.map((link, i)=>{
-          if (link.length == 0) return;
-          if (link.startsWith("/")) 
-            return <div key={i} className={styles.navButton}>
-              <Link href={"/"+params.segments.join("/") + link}>{link}</Link>
-            </div>;
-          else return <div key={i} className={styles.navButton}>
-            <button type="button" onClick={()=>{getMD(link)}} className={style1Fonts.CRIMSON_PRO_FONT}>{link}</button>
-          </div>
-        })
-      }
-    </nav>
+    <section id={styles.navContainer}>
+      {breadcrumbNav}
+      <nav id={styles.buttonsContainer}>
+        {
+          navLinks.current.map((link, i)=>{
+            if (link.length == 0) return;
+            if (link.startsWith("/")) 
+              return <div key={i} className={styles.navButton}>
+                <Link href={"/"+params.segments.join("/") + link}>{link}</Link>
+              </div>;
+            else return <div key={i} className={styles.navButton}>
+              <button type="button" onClick={()=>{getMD(link)}} className={style1Fonts.CRIMSON_PRO_FONT}>{link}</button>
+            </div>
+          })
+        }
+      </nav>
+    </section>
     <main>
       <Image src={featherPen} alt="" width={45} height={45}/>
       <div dangerouslySetInnerHTML={{__html: content}}></div>
     </main>
     <footer>
       <Link href={"./"} id={styles.BackButton}><Image src={leftImage} alt="" width={20} height={20}/>Back</Link>
-      <Link href={"/"} id={styles.homeButton}><Image src={homeImage} alt="" width={20} height={20}/> home page</Link>
+      <Link href={"/"} id={styles.homeButton}><Image src={homeImage} alt="" width={20} height={20}/>Home page</Link>
     </footer>
   </body>;
 }
-
 
 function purgeJsdelivr(path: string) {
   console.log("purging jsdelivr...");
