@@ -160,6 +160,7 @@
             }
             .changedRootOrdering, .fAndStatusContainer{
               font-size: 14px;
+              padding: 0px;
             }
           }
         }

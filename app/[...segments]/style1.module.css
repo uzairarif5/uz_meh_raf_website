@@ -34,12 +34,14 @@
       border-bottom: solid 1px #555;
       border-top: inset 2px black;
       border-bottom: inset 2px black;
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
     #buttonsContainer{
       display: flex;
       align-items: center;
-      overflow-x: scroll;
+      overflow-x: auto;
       border-top: inset 2px black;
       border-bottom: inset 2px black;
 
