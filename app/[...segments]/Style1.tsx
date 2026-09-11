@@ -53,10 +53,6 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         changeContent("");
       }
     })
-    .catch(err => {
-      console.error(err);
-      purgeJsdelivr(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${path}/order.txt`);
-    });
   }, []);
 
   function getMD(fileName: string){
@@ -79,10 +75,6 @@ export default function Main(params: {repoName: string, segments: string[]}) {
         changeContent(safeHtml);
       }
     })
-    .catch(err => {
-      console.error(err);
-      purgeJsdelivr(`https://purge.jsdelivr.net/gh/uzairarif5/${params.repoName}@main/${filePath}`);
-    });
   };
 
   return <body className={style1Fonts.CRIMSON_PRO_FONT} id={styles.body}>
@@ -113,14 +105,4 @@ export default function Main(params: {repoName: string, segments: string[]}) {
       <Link href={"/"} id={styles.homeButton}><Image src={homeImage} alt="" width={20} height={20}/>Home page</Link>
     </footer>
   </body>;
-}
-
-function purgeJsdelivr(path: string) {
-  console.log("purging jsdelivr...");
-  fetch(path)
-  .then(() => { console.log("jsdelivr purged"); })
-  .catch((err) => { 
-    console.log("Was not able to purge"); 
-    console.error(err);
-  });
 }

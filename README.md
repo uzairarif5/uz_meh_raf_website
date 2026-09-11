@@ -8,6 +8,12 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.14.4:
+- Made some coding changes.
+- Slightly changed "author error" page. 
+- Removed purging during fetch error.
+- Fixed updates table row ordering.
+
 update 0.14.0 - 0.14.3:
 - Changed the main background.
 - Made other CSS changes.

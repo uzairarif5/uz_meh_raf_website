@@ -13,17 +13,17 @@ async function recentEditsTable() {
     authorChanges.map((el, i) => {
       return <div key={i} className={styles.updateLogOneDate}>
         <div className={styles.dateAndAuthorContainer}>
-          <span className={styles.dateHolder}><LocalDateComp epochTime={el[0]}/></span>
-          <span className={styles.authorHolder}>by {el[1].author}</span>
+          <span className={styles.dateHolder}><LocalDateComp epochTime={el.date}/></span>
+          <span className={styles.authorHolder}>by {el.data.author}</span>
         </div>
-        {el[1].changes.map((update, j) => {
+        {el.data.changes.map((update, j) => {
           if (update.fName === "/") return <span key={j} className={styles.changedRootOrdering}>Changed root ordering.</span>;
           if (update.status === "removed") return <div key={j} className={styles.fAndStatusContainer}>
             <span className={styles.fNameContainer}>{update.fName}</span> 
             <span className={styles.statusContainer}>{update.status}</span>
           </div>;
           const pathName = update.fName.substring(0, update.fName.lastIndexOf("/"));
-          const linkName = `${el[1].author}/${pathName}`;
+          const linkName = `${el.data.author}/${pathName}`;
           return <a key={j} className={styles.fAndStatusContainer} href={linkName}>
             <span className={styles.fNameContainer}>{update.fName}</span> 
             <span className={styles.statusContainer}>{update.status}</span>

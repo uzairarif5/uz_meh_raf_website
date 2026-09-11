@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 type StatusType = "modified" | "removed" | "ordering";
 type UpdateType = {fName: string, status: StatusType}[];
 type UpdateTypeWithAuthor = {author: string, changes: UpdateType};
-export type AuthorChangesType = [number, UpdateTypeWithAuthor][]; //first number is Date
+export type AuthorChangesType = {date: number, data: UpdateTypeWithAuthor}[]; //first number is Date
 const supabaseURL = "https://hnvoklrpquwiekwyjvmu.supabase.co/storage/v1/object/public/uz-meh-raf-storage_bucket/commits.json";
 const useShortRecentsCommitsTTL = false //used for testing
 const recentCommitsTTL = useShortRecentsCommitsTTL ? 1000 : 3600000 //ms
@@ -29,17 +29,20 @@ async function getCommitsDetails(repoName: string, sha: string) {
   }).then(res => res.json()) || null;
 }
 
-function addDateToAuthorChanges(authorChanges: AuthorChangesType, epochTime: number, data: UpdateTypeWithAuthor) {
-  const toAdd: [number, UpdateTypeWithAuthor] = [epochTime, data];
+function addDateToAuthorChanges(authorChanges: AuthorChangesType, toAdd: {date: number, data: UpdateTypeWithAuthor}) {
   if (authorChanges.length === 0) authorChanges.push(toAdd);
   else if (authorChanges.length === 1) {
-    if (epochTime > authorChanges[0][0]) authorChanges.unshift(toAdd);
+    if (toAdd.date > authorChanges[0].date) authorChanges.unshift(toAdd);
     else authorChanges.push(toAdd);
   }
   else {
-    const insertIdx = authorChanges.findIndex(el => el[0] < epochTime);
-    authorChanges.splice(insertIdx, 0, toAdd);
+    const insertIdx = authorChanges.findIndex(el => el.date < toAdd.date);
+    console.log(insertIdx, toAdd.date);
+    if (insertIdx >= 0) authorChanges.splice(insertIdx, 0, toAdd);
+    else authorChanges.push(toAdd);
   }
+  console.log(authorChanges);
+  console.log();
 }
 
 export async function getAuthorChanges() {
@@ -83,7 +86,7 @@ export async function getAuthorChanges() {
         }
         if (shortenedFileName.length) curDateUpdates.push({fName: shortenedFileName, status: status});
       }
-      addDateToAuthorChanges(authorChanges, date.getTime(), {author: author, changes: curDateUpdates});
+      addDateToAuthorChanges(authorChanges, {date: date.getTime(), data: {author: author, changes: curDateUpdates}});
     } 
   }
 
