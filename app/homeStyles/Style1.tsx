@@ -45,11 +45,11 @@ export default async function Style1() {
         <Link style={{backgroundImage: "url(/uzair.jpg)"}} href={"./Uzair"}><span>Uzair</span></Link>
         <Link style={{backgroundImage: "url(/mehrab.jpg)"}}  href={"./Mehrab"}><span>Mehrab</span></Link>
         <Link style={{backgroundImage: "url(/rafay.jpg)"}}  href={"./Rafay"}><span>Rafay</span></Link>
+        <Link style={{backgroundImage: "url(/gossip.gif)"}}  href={"./conversations"}><span>Conversations</span></Link>
         <section id={styles.aboutUs}>
           <header><Image width={30} height={30} src={"/banana.gif"} alt="" unoptimized/><h4>About Us</h4></header>
           <p>Just three daydreamers trying to navigate the cesspit that is the internet today.<br/>Come and get lost in thought yourself, it will be freeing.</p>
         </section>
-        <Link style={{backgroundImage: "url(/gossip.gif)"}}  href={"./conversations"}><span>Conversations</span></Link>
       </section>
       <section id={styles.updatesSection}>
         <header><Image width={40} height={40} src={"/star.gif"} alt="" unoptimized/><h2>Latest updates</h2></header>
