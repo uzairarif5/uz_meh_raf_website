@@ -8,6 +8,11 @@ A blog website for me and my friends (Mehrab and Rafay).
 Versioning is done using "npm version [new-version] --git-tag-version false" 
 Updates follow this format: [major change].[minor change].[bug fixes].
 
+update 0.15.0:
+- Added a "conversations" page.
+- Removed the second writing gif from home title.
+- Minor CSS changes for home page.
+
 update 0.14.4:
 - Made some coding changes.
 - Slightly changed "author error" page. 

@@ -77,8 +77,10 @@ export default function Main(params: {repoName: string, segments: string[]}) {
     })
   };
 
+  const pageTitle = (params.segments[0] === "conversations") ? "Our Conversations" : `${params.segments[0]}'s blogs`;
+
   return <body className={style1Fonts.CRIMSON_PRO_FONT} id={styles.body}>
-    <header><Image src={bookImage} alt="" width={20} height={20}/><p>{params.segments[0]}'s blogs</p></header>
+    <header><Image src={bookImage} alt="" width={20} height={20}/><p>{pageTitle}</p></header>
     <section id={styles.navContainer}>
       {breadcrumbNav}
       <nav id={styles.buttonsContainer}>
